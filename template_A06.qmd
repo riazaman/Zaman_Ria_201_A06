@@ -240,6 +240,17 @@ Example: The number 312 would return 6 (3 + 1 + 2)
 Run your function with 935068.
 
 ```{r}
+sum_of_dig <- function(x){
+  if(x == 0){ #base case
+    return(0)
+  }else { #recursive case
+    last_digit <- x %% 10
+    new_num <- x %/% 10
+    return(last_digit + sum_of_dig(new_num)) #runs function with the next digit 
+  }
+}
+
+sum_of_dig(935068)
 
 ```
 
