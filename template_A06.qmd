@@ -116,6 +116,15 @@ Add a new named element to the end of each player's list called `height`. The he
 Print the `player_info` list to prove you were successful.
 
 ```{r}
+heights <- c(MJ=78, LJ=81, KB =78, KA=86, SO = 85)
+
+player_info <- lapply(names(player_info), function(player) {
+  player_info[[player]]$height <- heights[player]
+  return(player_info[[player]])
+})
+names(player_info) <- names(heights)
+
+print(player_info)
 
 ```
 
@@ -135,6 +144,14 @@ Hint: initialize an empty list
 Note: this must still run correctly even if the values were to change or if another player were added to the list or if the player order changed.
 
 ```{r}
+list_points_per_game <- list()
+
+for (player in names(player_info)) {
+  points_per_game <- player_info[[player]]$points / player_info[[player]]$games_played
+  list_points_per_game[[player]] <- points_per_game
+}
+
+print(list_points_per_game)
 
 ```
 
@@ -146,7 +163,8 @@ Use the list created in Part c and an appropriate apply function to round each v
 Store the output as a vector and print the results.
 
 ```{r}
-
+round_points_per_game <- sapply(list_points_per_game, function(i){round(i,2)})
+print(round_points_per_game)
 ```
 
 
