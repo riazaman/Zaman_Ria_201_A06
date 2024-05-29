@@ -176,6 +176,8 @@ Consider the matrix `mat_rand` of random numbers below.
 rand_num <- c(sample(10:100, 10), sample(100:999, 10), sample(1000:2000, 10))
 
 mat_rand <- matrix(sample(rand_num, 30), ncol = 5)
+
+print(mat_rand)
 ```
 
 Use an appropriate apply function to round values with 2 digits to the nearest tens, values with 3 digits to the nearest hundreds, and 4 digits to the nearest thousands.
@@ -185,6 +187,20 @@ ie: 91 rounds to 90; 173 rounds to 200; 1450 rounds to 1000
 Hint: use `MARGIN = 1:2` to apply the function to each value instead of only a row/col.
 
 ```{r}
+
+my_func <- function(x) {
+  if(x<100) {
+    return(round(x, -1))
+  } else if (x <1000) {
+    return(round(x,-2))
+  } else {
+    return(round(x, -3))
+  }
+}
+
+round_mat <- apply(mat_rand, MARGIN= 1:2, my_func)
+
+print(round_mat)
 
 ```
 
