@@ -1,7 +1,7 @@
 ---
 title: "Assignment 6"
 subtitle: "STAT 201"
-author: "YOUR NAME"
+author: "Ria Zaman"
 
 format:
   html:
@@ -56,7 +56,7 @@ To get full credit for this Question you must:
 
 ## Screenshot/image of RStudio
 
-![](filepath.png)
+![](gitpic.png)
 
 :::
 
@@ -119,8 +119,8 @@ Print the `player_info` list to prove you were successful.
 heights <- c(MJ=78, LJ=81, KB =78, KA=86, SO = 85)
 
 player_info <- lapply(names(player_info), function(player) {
-  player_info[[player]]$height <- heights[player]
-  return(player_info[[player]])
+  player_info[[player]]$height <- unname(heights[player]) #unname prints without name "MJ", "LJ", etc
+  return(player_info[[player]]) 
 })
 names(player_info) <- names(heights)
 
@@ -146,7 +146,7 @@ Note: this must still run correctly even if the values were to change or if anot
 ```{r}
 list_points_per_game <- list()
 
-for (player in names(player_info)) {
+for (player in names(player_info)) { #iterates through names, finds points/games played
   points_per_game <- player_info[[player]]$points / player_info[[player]]$games_played
   list_points_per_game[[player]] <- points_per_game
 }
@@ -163,7 +163,7 @@ Use the list created in Part c and an appropriate apply function to round each v
 Store the output as a vector and print the results.
 
 ```{r}
-round_points_per_game <- sapply(list_points_per_game, function(i){round(i,2)})
+round_points_per_game <- sapply(list_points_per_game, function(i){round(i,2)}) #rounds each element to 2 d.p.
 print(round_points_per_game)
 ```
 
@@ -187,7 +187,7 @@ ie: 91 rounds to 90; 173 rounds to 200; 1450 rounds to 1000
 Hint: use `MARGIN = 1:2` to apply the function to each value instead of only a row/col.
 
 ```{r}
-
+#function uses less than 100, 1000 as max values to obtain digits
 my_func <- function(x) {
   if(x<100) {
     return(round(x, -1))
@@ -198,7 +198,8 @@ my_func <- function(x) {
   }
 }
 
-round_mat <- apply(mat_rand, MARGIN= 1:2, my_func)
+
+round_mat <- apply(mat_rand, MARGIN= 1:2, my_func) #MARGIN = 1:2 - applies to both column and rows 
 
 print(round_mat)
 
@@ -225,8 +226,8 @@ max_temps <- read_tsv("state_max_temps.tsv") |>
 Calculate the average temperature for each month across the whole data frame (using the data for all three states together).
 
 ```{r}
-months_matrix <- max_temps[,3:14]
-average_temps <- apply(months_matrix, 2, mean)
+
+average_temps <- apply(max_temps[,3:14], 2, mean) #[,3:4] goes through 3rd to 14th column, leaves rows alone
 
 print(average_temps)
 
@@ -244,11 +245,9 @@ Create three new data frames by slicing the data by state.
 No need to print any output here.
 
 ```{r}
-co_mat <- subset(max_temps, state == "CO")
-
-oh_mat <- subset(max_temps, state == "OH")
-
-va_mat <- subset(max_temps, state == "VA")
+co_mat <- max_temps[max_temps$state == "CO",]
+oh_mat <- max_temps[max_temps$state == "OH",]
+va_mat <- max_temps[max_temps$state == "VA",]
 
 ```
 
